@@ -36,7 +36,7 @@ pipeline{
             steps {
                 sshagent(['my-ssh-credentials']) {
                     bat '''
-                        ssh -o StrictHostKeyChecking=no ec2-user@44.205.251.64 "ls /home/ec2-user"
+                        ssh -o StrictHostKeyChecking=no ubuntu@44.205.251.64 "ls /home/ec2-user"
                     '''
                 }
             }
