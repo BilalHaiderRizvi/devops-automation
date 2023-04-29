@@ -38,7 +38,7 @@ pipeline{
                     powershell """
                         New-Item -ItemType Directory -Path 'C:\\home\\ec2-user'
                         $SSHOptions = '-o StrictHostKeyChecking=no'
-                        ssh.exe $SSHOptions -i `"$env:SSH_PRIVATE_KEY`" `"$env:SSH_USERNAME@<EC2-instance-IP-address>`" `"echo 'Hello World' >> /home/ubuntu/hello.txt`"
+                        ssh.exe $SSHOptions -i `"$env:SSH_PRIVATE_KEY`" `"$env:SSH_USERNAME@44.205.251.64`" `"echo 'Hello World' >> /home/ubuntu/hello.txt`"
                     """
                 }
             }
