@@ -33,11 +33,14 @@ pipeline{
             }
         }
         stage('Deploy') {
-            steps {
-                sshagent(['my-ssh-credentials']) {
-                    bat '''
-                        ssh -o StrictHostKeyChecking=no ubuntu@44.205.251.64 "ls /home/ubuntu"
-                    '''
+             steps {
+                withCredentials([sshUserPrivateKey(credentialsId: 'my-ssh-credentials', keyFileVariable: 'SSH_PRIVATE_KEY', passphraseVariable: '', usernameVariable: 'SSH_USERNAME')]) {
+                    powershell """
+                        New-Item -ItemType Directory -Path 'C:\\home\\ec2-user'
+                        $SSHOptions = '-o StrictHostKeyChecking=no'
+                        ssh.exe $SSHOptions -i `"$env:SSH_PRIVATE_KEY`" `"$env:SSH_USERNAME@<EC2-instance-IP-address>`" `"ls /home/ec2-user`"
+                        ssh.exe $SSHOptions -i `"$env:SSH_PRIVATE_KEY`" `"$env:SSH_USERNAME@<EC2-instance-IP-address>`" `"echo 'Hello World' >> /home/ec2-user/hello.txt`"
+                    """
                 }
             }
         }
